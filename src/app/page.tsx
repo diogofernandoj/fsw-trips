@@ -1,17 +1,16 @@
-import { prisma } from "@/lib/prisma";
+"use client";
 
-const getTrips = async () => {
-  const trips = await prisma.user.findMany({});
-  return trips;
-};
+import { signIn } from "next-auth/react";
 
-export default async function Home() {
-  const data = await getTrips();
-  console.log(data);
+export default function Home() {
+  const handleLogin = () => {
+    signIn();
+  };
 
   return (
     <div>
       <h1>Home Page</h1>
+      <button onClick={handleLogin}>Login</button>
     </div>
   );
 }

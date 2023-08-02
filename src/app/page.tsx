@@ -1,16 +1,11 @@
-"use client";
+import TripSearch from "./components/TripSearch";
 
-import { signIn } from "next-auth/react";
-
-export default function Home() {
-  const handleLogin = () => {
-    signIn();
-  };
-
+const Home = () => {
   return (
     <div>
-      <h1>Home Page</h1>
-      <button onClick={handleLogin}>Login</button>
+      <TripSearch />
     </div>
   );
-}
+};
+
+export default Home;

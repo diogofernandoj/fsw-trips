@@ -50,7 +50,7 @@ const Header = () => {
             />
 
             {!!menu && (
-              <div className="absolute top-full right-0 w-full h-full shadow-md flex justify-center items-center rounded-lg">
+              <div className="absolute top-full right-0 w-full h-full bg-white shadow-md flex justify-center items-center rounded-lg">
                 <button
                   className="text-primary font-medium text-sm"
                   onClick={handleLogoutClick}

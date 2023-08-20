@@ -3,7 +3,7 @@ import TripHeader from "./components/TripHeader";
 import TripReservation from "./components/TripReservation";
 
 const getTrip = async (tripId: string) => {
-  const trip = await prisma.trip.findFirst({
+  const trip = await prisma.trip.findUnique({
     where: {
       id: tripId,
     },

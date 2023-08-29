@@ -2,6 +2,7 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { MdMenu, MdClose } from "react-icons/md";
 
@@ -16,7 +17,9 @@ const Header = () => {
   return (
     <div className="w-full mx-auto max-w-6xl h-20 flex items-center">
       <nav className="w-11/12 m-auto flex items-center justify-between">
-        <Image width={183} height={32} src="/logo.png" alt="FSW Logo" />
+        <Link href="/">
+          <Image width={183} height={32} src="/logo.png" alt="FSW Logo" />
+        </Link>
         {status === "unauthenticated" && (
           <button
             onClick={handleLoginClick}

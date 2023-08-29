@@ -26,7 +26,7 @@ const Header = () => {
           </button>
         )}
         {status === "authenticated" && (
-          <div className="flex items-center gap-1 border border-solid border-gray-300 p-2 rounded-full relative">
+          <div className="z-10 flex items-center gap-1 border border-solid border-gray-300 p-2 rounded-full relative">
             {!menu && (
               <MdMenu
                 size="1.5rem"

@@ -23,7 +23,11 @@ const TripDetails = async ({ params }: { params: { tripId: string } }) => {
   return (
     <div className="w-full max-w-6xl mx-auto">
       <TripHeader trip={trip} />
-      <TripReservation trip={trip} />
+      <TripReservation
+        tripStartDate={trip.startDate}
+        tripEndDate={trip.endDate}
+        maxGuests={trip.maxGuests}
+      />
       <TripDescription description={trip.description} />
       <TripHighlights highlights={trip.highlights} />
       <TripLocation

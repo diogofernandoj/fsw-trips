@@ -3,12 +3,15 @@
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Input from "@/components/Input";
+import { differenceInDays } from "date-fns";
 import { Controller, useForm } from "react-hook-form";
 
 type TripReservationProps = {
+  tripId: string;
   tripStartDate: Date;
   tripEndDate: Date;
   maxGuests: number;
+  pricePerDay: number;
 };
 
 type TripReservationForm = {
@@ -18,9 +21,11 @@ type TripReservationForm = {
 };
 
 const TripReservation = ({
+  tripId,
   tripStartDate,
   tripEndDate,
   maxGuests,
+  pricePerDay,
 }: TripReservationProps) => {
   const {
     register,
@@ -28,13 +33,36 @@ const TripReservation = ({
     control,
     formState: { errors },
     watch,
+    setError,
   } = useForm<TripReservationForm>();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: TripReservationForm) => {
+    const response = await fetch("/api/trips/check", {
+      method: "POST",
+      body: JSON.stringify({
+        startDate: data.startDate,
+        endDate: data.endDate,
+        tripId,
+      }),
+    });
+
+    const res = await response.json();
+
+    if (res?.error?.code === "TRIP_ALREADY_RESERVED") {
+      setError("startDate", {
+        type: "manual",
+        message: "Essa data ja está reservada.",
+      });
+
+      setError("endDate", {
+        type: "manual",
+        message: "Essa data ja está reservada.",
+      });
+    }
   };
 
   const startDate = watch("startDate");
+  const endDate = watch("endDate");
 
   return (
     <div className="flex flex-col px-5">
@@ -98,8 +126,16 @@ const TripReservation = ({
       />
 
       <div className="flex justify-between mt-3">
-        <p className="font-medium text-sm text-primaryDark">Total: </p>
-        <p className="font-medium text-sm text-primaryDark">R$2.660</p>
+        <p className="font-medium text-sm text-primaryDark">{`Total${
+          startDate && endDate
+            ? "(" + differenceInDays(endDate, startDate) + " dias)"
+            : ""
+        }: `}</p>
+        <p className="font-medium text-sm text-primaryDark">{`${
+          startDate && endDate
+            ? differenceInDays(endDate, startDate) * pricePerDay
+            : "R$0"
+        }`}</p>
       </div>
 
       <div className="pb-10 border-b border-grayLight w-full">

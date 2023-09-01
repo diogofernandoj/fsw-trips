@@ -25,9 +25,7 @@ const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
         {location}
       </h3>
       <p className="text-xs text-primaryDark mt-2 leading-5">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
-        voluptates, fugit dignissimos dicta ducimus quae doloremque deserunt vel
-        odit enim totam, maiores quo perferendis eum.
+        {locationDescription}
       </p>
       <Button variant="outlined" className="w-full mt-5">
         Ver no Google Maps

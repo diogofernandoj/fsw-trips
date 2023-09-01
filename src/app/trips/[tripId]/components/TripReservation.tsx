@@ -118,11 +118,16 @@ const TripReservation = ({
             value: true,
             message: "O número de hóspedes é obrigatório.",
           },
+          max: {
+            value: maxGuests,
+            message: `Número de hóspedes não pode ser maior que ${maxGuests}`,
+          },
         })}
         className="mt-2"
         placeholder={`Número de hóspedes (máx: ${maxGuests})`}
         error={!!errors?.guests}
         errorMessage={errors.guests?.message}
+        type="number"
       />
 
       <div className="flex justify-between mt-3">

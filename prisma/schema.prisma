@@ -14,7 +14,7 @@ model Trip {
   id                  String            @id @default(uuid())
   name                String
   location            String
-  locationDescription String            @default("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae laudantium explicabo animi rem numquam accusantium minima magnam a repellendus. Fugiat?")
+  locationDescription String            @default("Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit minima, sed sapiente laudantium asperiores dolores possimus magnam? Voluptates laborum dicta iure eveniet. Ipsam, accusamus!")
   startDate           DateTime
   endDate             DateTime
   pricePerDay         Decimal           @db.Decimal(8, 2)

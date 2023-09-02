@@ -24,7 +24,7 @@ const TripLocation = ({ location, locationDescription }: TripLocationProps) => {
       <h3 className="text-primaryDark text-sm font-semibold mt-4">
         {location}
       </h3>
-      <p className="text-xs text-primaryDark mt-2 leading-5">
+      <p className="text-xs text-primaryDark leading-5">
         {locationDescription}
       </p>
       <Button variant="outlined" className="w-full mt-5">

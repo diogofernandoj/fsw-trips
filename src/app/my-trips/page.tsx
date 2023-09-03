@@ -1,33 +1,42 @@
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+"use client";
 
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import UserReservationItem from "./components/UserReservationItem";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Prisma } from "@prisma/client";
 import Link from "next/link";
+
+import UserReservationItem from "./components/UserReservationItem";
 import Button from "@/components/Button";
 
-const getReservations = async (userId: string) => {
-  const reseservations = await prisma.tripReservation.findMany({
-    where: {
-      userId,
-    },
-    include: {
-      trip: true,
-    },
-  });
+const MyTrips = () => {
+  const [reservations, setReservations] = useState<
+    Prisma.TripReservationGetPayload<{
+      include: { trip: true };
+    }>[]
+  >([]);
 
-  return reseservations;
-};
+  const { status, data } = useSession();
 
-const MyTrips = async () => {
-  const data = await getServerSession(authOptions);
+  const router = useRouter();
 
-  if (!data?.user) {
-    redirect("/");
-  }
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      return router.push("/");
+    }
 
-  const reservations = await getReservations((data.user as any).id);
+    const fetchReservations = async () => {
+      const response = await fetch(
+        `/api/user/${(data?.user as any)?.id}/reservations`
+      );
+
+      const json = await response.json();
+
+      setReservations(json);
+    };
+
+    fetchReservations();
+  }, [status, data?.user, router, reservations]);
 
   return (
     <div className="w-full max-w-6xl mx-auto p-5">

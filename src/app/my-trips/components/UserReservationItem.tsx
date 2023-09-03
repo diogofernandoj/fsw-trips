@@ -63,11 +63,15 @@ const UserReservationItem = ({ reservation }: UserReservationProps) => {
         <h3 className="text-sm font-medium">Data</h3>
         <div className="flex gap-1">
           <p className="text-sm">
-            {format(reservation.startDate, "dd 'de' MMMM", { locale: ptBR })}
+            {format(new Date(reservation.startDate), "dd 'de' MMMM", {
+              locale: ptBR,
+            })}
           </p>
           {" - "}
           <p className="text-sm">
-            {format(reservation.endDate, "dd 'de' MMMM", { locale: ptBR })}
+            {format(new Date(reservation.endDate), "dd 'de' MMMM", {
+              locale: ptBR,
+            })}
           </p>
         </div>
 

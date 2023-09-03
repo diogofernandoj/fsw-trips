@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import UserReservationItem from "./components/UserReservationItem";
+import Link from "next/link";
+import Button from "@/components/Button";
 
 const getReservations = async (userId: string) => {
   const reseservations = await prisma.tripReservation.findMany({
@@ -30,9 +32,21 @@ const MyTrips = async () => {
   return (
     <div className="w-full max-w-6xl mx-auto p-5">
       <h1 className="text-xl text-primaryDark font-semibold">Minhas viagens</h1>
-      {reservations.map((reservation) => (
-        <UserReservationItem key={reservation.id} reservation={reservation} />
-      ))}
+      {reservations.length > 0 ? (
+        reservations.map((reservation) => (
+          <UserReservationItem key={reservation.id} reservation={reservation} />
+        ))
+      ) : (
+        <div className="flex flex-col">
+          <p className="text-primaryDark font-medium mt-4">
+            Você ainda não tem reservas adicionadas.
+          </p>
+
+          <Link href="/">
+            <Button className="w-full mt-2">Adicionar reserva</Button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

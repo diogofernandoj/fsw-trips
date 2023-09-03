@@ -61,6 +61,7 @@ const Header = () => {
                 <Link
                   href="/my-trips"
                   className="text-primary font-medium text-xs pt-2 pb-1 text-center"
+                  onClick={() => setMenu(false)}
                 >
                   Minhas viagens
                 </Link>

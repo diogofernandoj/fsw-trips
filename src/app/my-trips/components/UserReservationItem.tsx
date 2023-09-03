@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { format } from "date-fns";
 import ReactCountryFlag from "react-country-flag";
@@ -5,6 +7,7 @@ import { Prisma } from "@prisma/client";
 import ptBR from "date-fns/locale/pt-BR";
 
 import Button from "@/components/Button";
+import { toast } from "react-toastify";
 
 type UserReservationProps = {
   reservation: Prisma.TripReservationGetPayload<{
@@ -14,6 +17,25 @@ type UserReservationProps = {
 
 const UserReservationItem = ({ reservation }: UserReservationProps) => {
   const { trip } = reservation;
+
+  const handleDeleteClick = async () => {
+    const res = await fetch(
+      `http://localhost:3000/api/trips/reservation/${reservation.id}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (!res.ok) {
+      return toast.error("Ocorreu um erro ao cancelar a reserva!", {
+        position: "bottom-center",
+      });
+    }
+
+    toast.success("Reserva cancelada com sucesso!", {
+      position: "bottom-center",
+    });
+  };
 
   return (
     <div className="flex flex-col p-5 mt-5 border-grayLight border-solid border shadow-lg rounded-lg">
@@ -54,17 +76,17 @@ const UserReservationItem = ({ reservation }: UserReservationProps) => {
           {reservation.guests} hóspedes
         </p>
 
-        <h2 className="text-lg text-primaryDark font-semibold mt-3">
+        <h2 className="text-primaryDark font-semibold mt-3">
           Informações sobre o preço
         </h2>
         <div className="flex justify-between mt-2">
           <p className="text-primaryDark text-sm">Total:</p>
           <p className="font-medium text-sm">
-            R${reservation.totalPaid.toFixed(2).replace(".", ",")}
+            R${Number(reservation.totalPaid).toFixed(2).replace(".", ",")}
           </p>
         </div>
 
-        <Button variant="danger" className="mt-5">
+        <Button variant="danger" className="mt-5" onClick={handleDeleteClick}>
           Cancelar
         </Button>
       </div>

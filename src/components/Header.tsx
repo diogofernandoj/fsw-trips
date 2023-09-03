@@ -31,18 +31,22 @@ const Header = () => {
         {status === "authenticated" && (
           <div className="z-10 flex items-center gap-1 border border-solid border-gray-300 p-2 rounded-full relative">
             {!menu && (
-              <MdMenu
-                size="1.5rem"
-                className="text-gray-400 cursor-pointer"
-                onClick={() => setMenu(true)}
-              />
+              <button>
+                <MdMenu
+                  size="1.5rem"
+                  className="text-gray-400 cursor-pointer"
+                  onClick={() => setMenu(true)}
+                />
+              </button>
             )}
             {!!menu && (
-              <MdClose
-                size="1.5rem"
-                className="text-primary cursor-pointer"
-                onClick={() => setMenu(false)}
-              />
+              <button>
+                <MdClose
+                  size="1.5rem"
+                  className="text-primary cursor-pointer"
+                  onClick={() => setMenu(false)}
+                />
+              </button>
             )}
             <Image
               width={30}
@@ -53,9 +57,16 @@ const Header = () => {
             />
 
             {!!menu && (
-              <div className="absolute top-full right-0 w-full h-full bg-white shadow-md flex justify-center items-center rounded-lg">
+              <div className="mt-[1px] absolute top-full right-0 w-full bg-walterWhite shadow-lg flex flex-col justify-center items-center rounded-lg">
+                <Link
+                  href="/my-trips"
+                  className="text-primary font-medium text-xs pt-2 pb-1 text-center"
+                >
+                  Minhas viagens
+                </Link>
+                <div className="border-b border border-[#e5e5e5]  w-4/5"></div>
                 <button
-                  className="text-primary font-medium text-sm"
+                  className="text-primary font-medium text-xs pb-2 pt-1"
                   onClick={handleLogoutClick}
                 >
                   Logout

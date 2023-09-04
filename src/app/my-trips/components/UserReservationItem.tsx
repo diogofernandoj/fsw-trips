@@ -19,12 +19,9 @@ const UserReservationItem = ({ reservation }: UserReservationProps) => {
   const { trip } = reservation;
 
   const handleDeleteClick = async () => {
-    const res = await fetch(
-      `http://localhost:3000/api/trips/reservation/${reservation.id}`,
-      {
-        method: "DELETE",
-      }
-    );
+    const res = await fetch(`/api/trips/reservation/${reservation.id}`, {
+      method: "DELETE",
+    });
 
     if (!res.ok) {
       return toast.error("Ocorreu um erro ao cancelar a reserva!", {

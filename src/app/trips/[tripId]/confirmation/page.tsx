@@ -10,6 +10,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import Button from "@/components/Button";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
 
 const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   const [trip, setTrip] = useState<Trip | null>(null);
@@ -50,7 +51,7 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   if (!trip) return null;
 
   const handleReservationButton = async () => {
-    const res = await fetch("/api/trips/reservation", {
+    const res = await fetch("/api/payment", {
       method: "POST",
       body: JSON.stringify({
         tripId: params.tripId,
@@ -58,7 +59,10 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
         endDate: searchParams.get("endDate"),
         guests: Number(searchParams.get("guests")),
         userId: (data?.user as any).id,
-        totalPaid: totalPrice,
+        name: trip.name,
+        description: trip.description,
+        coverImage: trip.coverImage,
+        totalPrice,
       }),
     });
 
@@ -68,7 +72,13 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
       });
     }
 
-    router.push("/");
+    const { sessionId } = await res.json();
+
+    const stripe = await loadStripe(
+      process.env.NEXT_PUBLIC_STRIPE_KEY as string
+    );
+
+    await stripe?.redirectToCheckout({ sessionId });
 
     toast.success("Reserva realizada com sucesso!", {
       position: "bottom-center",

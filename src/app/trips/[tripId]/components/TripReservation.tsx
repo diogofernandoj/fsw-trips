@@ -89,7 +89,10 @@ const TripReservation = ({
   const endDate = watch("endDate");
 
   return (
-    <div className="flex flex-col px-5">
+    <div className="flex flex-col px-5 lg:p-5 lg:min-w-[380px] lg:border-grayLight lg:border lg:rounded-lg lg:shadow-md">
+      <p className="text-primaryDark text-xl mb-4 hidden lg:block">
+        <span className="font-semibold">R${pricePerDay}</span> por dia
+      </p>
       <div className="flex gap-4">
         <Controller
           name="startDate"

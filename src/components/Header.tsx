@@ -15,8 +15,8 @@ const Header = () => {
   const [menu, setMenu] = useState<boolean>(false);
 
   return (
-    <div className="w-full mx-auto max-w-6xl h-20 flex items-center">
-      <nav className="w-11/12 m-auto flex items-center justify-between">
+    <div className="w-full mx-auto h-20 flex items-center lg:border-b lg:border-[#eee]">
+      <nav className="w-11/12 max-w-6xl mx-auto flex items-center justify-between">
         <Link href="/">
           <Image width={183} height={32} src="/logo.png" alt="FSW Logo" />
         </Link>
@@ -57,7 +57,7 @@ const Header = () => {
             />
 
             {!!menu && (
-              <div className="mt-[1px] absolute top-full right-0 w-full bg-walterWhite shadow-lg flex flex-col justify-center items-center rounded-lg">
+              <div className="mt-[1px] absolute top-full right-0 w-[110%] bg-white shadow-lg flex flex-col justify-center items-center rounded-lg border border-walterWhite">
                 <Link
                   href="/my-trips"
                   className="text-primary font-medium text-xs pt-2 pb-1 text-center"
@@ -65,7 +65,7 @@ const Header = () => {
                 >
                   Minhas viagens
                 </Link>
-                <div className="border-b border border-[#e5e5e5]  w-4/5"></div>
+                <div className="border-b border-[#e5e5e5]  w-4/5"></div>
                 <button
                   className="text-primary font-medium text-xs pb-2 pt-1"
                   onClick={handleLogoutClick}

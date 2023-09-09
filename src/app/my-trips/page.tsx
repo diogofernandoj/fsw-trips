@@ -35,9 +35,9 @@ const MyTrips = () => {
   if (status === "unauthenticated") return router.push("/");
 
   return (
-    <div className="container mx-auto p-5 pb-14">
+    <div className="container mx-auto p-5 pb-14 relative">
       <h1 className="font-semibold text-primaryDarker text-xl lg:mb-5">
-        Minhas Viagens
+        Minhas reservas
       </h1>
       {!!loading ? (
         ""
@@ -57,6 +57,8 @@ const MyTrips = () => {
             <UserReservationItem
               key={reservation.id}
               reservation={reservation}
+              reservations={reservations}
+              setReservations={setReservations}
             />
           ))}
         </div>

@@ -3,31 +3,50 @@
 import Image from "next/image";
 import { format } from "date-fns";
 import ReactCountryFlag from "react-country-flag";
-import { Prisma } from "@prisma/client";
+import { Trip, TripReservation } from "@prisma/client";
 import ptBR from "date-fns/locale/pt-BR";
+import { TbAlertTriangle } from "react-icons/tb";
 
 import Button from "@/components/Button";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 type UserReservationProps = {
-  reservation: Prisma.TripReservationGetPayload<{
-    include: { trip: true };
-  }>;
+  reservation: TripReservation & { trip: Trip };
+  reservations: (TripReservation & { trip: Trip })[];
+  setReservations: (array: any) => void;
 };
 
-const UserReservationItem = ({ reservation }: UserReservationProps) => {
+const UserReservationItem = ({
+  reservation,
+  reservations,
+  setReservations,
+}: UserReservationProps) => {
   const { trip } = reservation;
+
+  const [modalOpen, setModal] = useState<boolean>(false);
+
+  const handleModalClick = (target: any) => {
+    if (target.id === "modal") {
+      setModal(false);
+    }
+  };
 
   const handleDeleteClick = async () => {
     const res = await fetch(`/api/trips/reservation/${reservation.id}`, {
       method: "DELETE",
     });
 
+    setModal(false);
+
     if (!res.ok) {
       return toast.error("Ocorreu um erro ao cancelar a reserva!", {
         position: "bottom-center",
       });
     }
+
+    const newList = reservations.filter((item) => item.id !== reservation.id);
+    setReservations(newList);
 
     toast.success("Reserva cancelada com sucesso!", {
       position: "bottom-center",
@@ -36,6 +55,39 @@ const UserReservationItem = ({ reservation }: UserReservationProps) => {
 
   return (
     <div className="flex flex-col p-5 mt-5 border-grayLight border-solid border shadow-lg rounded-lg">
+      {!!modalOpen && (
+        <div
+          id="modal"
+          className="fixed inset-0 z-50 bg-[#bbb9] flex items-center justify-center"
+          onClick={(e) => handleModalClick(e.target)}
+        >
+          <div className="bg-white p-5 w-11/12 max-w-[500px] rounded-md shadow-lg flex flex-col gap-2">
+            <div className="flex gap-2 items-center">
+              <div className="bg-red-500 bg-opacity-30 h-10 w-10 rounded-full text-red-500 flex justify-center items-center">
+                <TbAlertTriangle size={24} />
+              </div>
+              <h2 className="text-xl font-semibold text-primaryDark">
+                Cancelar reserva
+              </h2>
+            </div>
+            <p className="text-grayPrimary text-base">
+              Tem certeza que deseja cancelar sua reserva?
+            </p>
+            <div className="flex justify-end gap-2 mt-5 w-full">
+              <Button
+                variant="danger"
+                className="w-1/2"
+                onClick={() => setModal(false)}
+              >
+                Voltar
+              </Button>
+              <Button className="w-1/2" onClick={handleDeleteClick}>
+                Sim, cancelar
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="flex items-center gap-3 pb-5 border-b border-grayLight border-solid">
         <div className="relative h-[106px] w-[124px]">
           <Image
@@ -87,7 +139,11 @@ const UserReservationItem = ({ reservation }: UserReservationProps) => {
           </p>
         </div>
 
-        <Button variant="danger" className="mt-5" onClick={handleDeleteClick}>
+        <Button
+          variant="danger"
+          className="mt-5"
+          onClick={() => setModal(true)}
+        >
           Cancelar
         </Button>
       </div>

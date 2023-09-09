@@ -13,6 +13,7 @@ const Trips = () => {
   const budget = get("budget");
 
   const [trips, setTrips] = useState<Trip[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const getTrips = async () => {
@@ -25,6 +26,7 @@ const Trips = () => {
       const data = await res.json();
 
       setTrips(data);
+      setLoading(false);
     };
 
     getTrips();
@@ -35,17 +37,23 @@ const Trips = () => {
       <h1 className="text-center text-primaryDark font-semibold text-xl">
         Viagens encontradas
       </h1>
-      <p className="text-center text-grayPrimary font-medium mb-5">
-        {trips.length > 0
-          ? "Listamos as melhores viagens para você!"
-          : "Não encontramos nenhuma viagem! =("}
-      </p>
+      {!!loading ? (
+        ""
+      ) : (
+        <div>
+          <p className="text-center text-grayPrimary font-medium mb-5">
+            {trips.length > 0
+              ? "Listamos as melhores viagens para você!"
+              : "Não encontramos nenhuma viagem! =("}
+          </p>
 
-      <div className="flex justify-center items-center flex-wrap gap-5">
-        {trips.map((trip) => (
-          <TripItem key={trip.id} trip={trip} />
-        ))}
-      </div>
+          <div className="flex justify-center items-center flex-wrap gap-5">
+            {trips.map((trip) => (
+              <TripItem key={trip.id} trip={trip} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

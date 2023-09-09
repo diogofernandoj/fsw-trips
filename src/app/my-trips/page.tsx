@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Prisma } from "@prisma/client";
@@ -24,7 +24,6 @@ const MyTrips = () => {
     if (status === "unauthenticated") {
       return router.push("/");
     }
-
     const fetchReservations = async () => {
       const response = await fetch(
         `/api/user/${(data?.user as any)?.id}/reservations`
@@ -36,23 +35,30 @@ const MyTrips = () => {
     };
 
     fetchReservations();
-  }, [status, data?.user, router, reservations]);
+  }, [status, router, data?.user]);
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-5">
-      <h1 className="text-xl text-primaryDark font-semibold">Minhas viagens</h1>
+    <div className="container mx-auto p-5 pb-14">
+      <h1 className="font-semibold text-primaryDarker text-xl lg:mb-5">
+        Minhas Viagens
+      </h1>
       {reservations.length > 0 ? (
-        reservations.map((reservation) => (
-          <UserReservationItem key={reservation.id} reservation={reservation} />
-        ))
+        <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-14">
+          {reservations?.map((reservation) => (
+            <UserReservationItem
+              key={reservation.id}
+              reservation={reservation}
+            />
+          ))}
+        </div>
       ) : (
-        <div className="flex flex-col">
-          <p className="text-primaryDark font-medium mt-4">
-            Você ainda não tem reservas adicionadas.
+        <div className="flex flex-col lg:max-w-[500px]">
+          <p className="mt-2 font-medium text-primaryDarker">
+            Você ainda não tem nenhuma reserva! =(
           </p>
 
           <Link href="/">
-            <Button className="w-full mt-2">Adicionar reserva</Button>
+            <Button className="w-full mt-2 lg:mt-5">Fazer reserva</Button>
           </Link>
         </div>
       )}

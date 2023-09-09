@@ -82,7 +82,7 @@ const TripSearch = () => {
 
         <Button
           onClick={() => handleSubmit(onSubmit)()}
-          className="w-full lg:w-1/2"
+          className="w-full lg:w-1/2 lg:h-fit"
         >
           Buscar
         </Button>

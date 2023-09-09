@@ -8,6 +8,8 @@ import Link from "next/link";
 
 import UserReservationItem from "./components/UserReservationItem";
 import Button from "@/components/Button";
+import { motion } from "framer-motion";
+import { fadeIn } from "@/animation/variants";
 
 const MyTrips = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -36,13 +38,25 @@ const MyTrips = () => {
 
   return (
     <div className="container mx-auto p-5 pb-14 relative">
-      <h1 className="font-semibold text-primaryDarker text-xl lg:mb-5">
+      <motion.h1
+        variants={fadeIn("up", 0.4)}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
+        className="font-semibold text-primaryDarker text-xl lg:mb-5"
+      >
         Minhas reservas
-      </h1>
+      </motion.h1>
       {!!loading ? (
         ""
       ) : !reservations ? (
-        <div className="flex flex-col lg:max-w-[500px]">
+        <motion.div
+          variants={fadeIn("up", 0.4)}
+          initial="hidden"
+          animate="show"
+          exit="hidden"
+          className="flex flex-col lg:max-w-[500px]"
+        >
           <p className="mt-2 font-medium text-primaryDarker">
             Você ainda não tem nenhuma reserva! =(
           </p>
@@ -50,9 +64,15 @@ const MyTrips = () => {
           <Link href="/">
             <Button className="w-full mt-2 lg:mt-5">Fazer reserva</Button>
           </Link>
-        </div>
+        </motion.div>
       ) : (
-        <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-14">
+        <motion.div
+          variants={fadeIn("up", 0.4)}
+          initial="hidden"
+          animate="show"
+          exit="hidden"
+          className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-14"
+        >
           {reservations?.map((reservation) => (
             <UserReservationItem
               key={reservation.id}
@@ -61,7 +81,7 @@ const MyTrips = () => {
               setReservations={setReservations}
             />
           ))}
-        </div>
+        </motion.div>
       )}
     </div>
   );

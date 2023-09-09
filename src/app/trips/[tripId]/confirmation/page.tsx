@@ -11,6 +11,8 @@ import Button from "@/components/Button";
 import { signIn, useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import { loadStripe } from "@stripe/stripe-js";
+import { motion } from "framer-motion";
+import { fadeIn } from "@/animation/variants";
 
 const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   const [trip, setTrip] = useState<Trip | null>(null);
@@ -96,7 +98,13 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   const guests = searchParams.get("guests");
 
   return (
-    <div className="w-full max-w-[600px] p-5 mx-auto pb-14">
+    <motion.div
+      variants={fadeIn("up", 0.4)}
+      initial="hidden"
+      animate="show"
+      exit="hidden"
+      className="w-full max-w-[600px] p-5 mx-auto pb-14"
+    >
       {!!loading ? (
         <div></div>
       ) : (
@@ -154,7 +162,7 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

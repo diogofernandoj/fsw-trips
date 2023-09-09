@@ -10,6 +10,8 @@ import { TbAlertTriangle } from "react-icons/tb";
 import Button from "@/components/Button";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { fadeIn } from "@/animation/variants";
 
 type UserReservationProps = {
   reservation: TripReservation & { trip: Trip };
@@ -61,7 +63,13 @@ const UserReservationItem = ({
           className="fixed inset-0 z-50 bg-[#bbb9] flex items-center justify-center"
           onClick={(e) => handleModalClick(e.target)}
         >
-          <div className="bg-white p-5 w-11/12 max-w-[500px] rounded-md shadow-lg flex flex-col gap-2">
+          <motion.div
+            variants={fadeIn("down", 0)}
+            initial="hidden"
+            animate="show"
+            exit="hidden"
+            className="bg-white p-5 w-11/12 max-w-[500px] rounded-md shadow-lg flex flex-col gap-2"
+          >
             <div className="flex gap-2 items-center">
               <div className="bg-red-500 bg-opacity-30 h-10 w-10 rounded-full text-red-500 flex justify-center items-center">
                 <TbAlertTriangle size={24} />
@@ -85,7 +93,7 @@ const UserReservationItem = ({
                 Sim, cancelar
               </Button>
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
       <div className="flex items-center gap-3 pb-5 border-b border-grayLight border-solid">

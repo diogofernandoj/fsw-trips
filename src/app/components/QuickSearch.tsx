@@ -1,9 +1,19 @@
+"use client";
+
+import { fadeIn } from "@/animation/variants";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
 const QuickSearch = () => {
   return (
-    <div className="w-full max-w-6xl mx-auto p-5">
+    <motion.div
+      variants={fadeIn("right", 0.2)}
+      initial="hidden"
+      animate="show"
+      exit="hidden"
+      className="w-full max-w-6xl mx-auto p-5"
+    >
       <div className="flex items-center">
         <div className="w-full h-[1px] bg-grayLight"></div>
         <h2 className="font-medium text-grayPrimary px-5 whitespace-nowrap lg:text-base">
@@ -45,7 +55,7 @@ const QuickSearch = () => {
           <p className="text-sm text-grayPrimary lg:text-lg">Pousada</p>
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -19,7 +19,7 @@ export async function POST(request: Request) {
   } = await request.json();
 
   const session = await stripe.checkout.sessions.create({
-    success_url: process.env.HOST_URL!,
+    success_url: process.env.SUCCESS_URL!,
     metadata: {
       tripId,
       userId,

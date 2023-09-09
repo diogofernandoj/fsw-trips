@@ -90,8 +90,8 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   const guests = searchParams.get("guests");
 
   return (
-    <div className="w-full max-w-6xl p-5 mx-auto">
-      <h2 className="font-semibold font-xl text-primaryDark">Sua viagem</h2>
+    <div className="w-full max-w-[600px] p-5 mx-auto pb-14">
+      <h2 className="font-semibold text-xl text-primaryDark">Sua viagem</h2>
 
       {/* CARD */}
       <div className="flex flex-col p-5 mt-5 border-grayLight border-solid border shadow-lg rounded-lg">

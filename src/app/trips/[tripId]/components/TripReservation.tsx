@@ -157,6 +157,7 @@ const TripReservation = ({
         error={!!errors?.guests}
         errorMessage={errors?.guests?.message}
         type="number"
+        min={1}
       />
 
       <div className="flex justify-between mt-3">

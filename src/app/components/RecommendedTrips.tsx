@@ -11,7 +11,7 @@ const RecommendedTrips = async () => {
   const trips = await getTrips();
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-5">
+    <div className="w-full max-w-6xl mx-auto p-5 pt-0">
       <div className="flex items-center">
         <div className="w-full h-[1px] bg-grayLight"></div>
         <h2 className="font-medium text-grayPrimary px-5 whitespace-nowrap lg:text-base">

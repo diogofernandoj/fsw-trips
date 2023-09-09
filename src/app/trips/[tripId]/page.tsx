@@ -21,7 +21,7 @@ const TripDetails = async ({ params }: { params: { tripId: string } }) => {
   if (!trip) return null;
 
   return (
-    <div className="w-full max-w-6xl mx-auto lg:px-20">
+    <div className="w-full max-w-6xl mx-auto lg:px-20 lg:pt-10">
       <TripHeader trip={trip} />
       <div className="flex flex-col lg:flex-row lg:mt-12">
         <div className="lg:order-2">

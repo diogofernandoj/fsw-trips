@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Trip } from "@prisma/client";
 import TripItem from "@/components/TripItem";
+import SkeletonTripItem from "@/components/SkeletonTripItem";
 
 const Trips = () => {
   const { get } = useSearchParams();
@@ -38,7 +39,11 @@ const Trips = () => {
         Viagens encontradas
       </h1>
       {!!loading ? (
-        ""
+        <div className="flex justify-center items-center flex-wrap gap-5 mt-12">
+          {new Array(6).fill("").map((item, index) => (
+            <SkeletonTripItem key={index} />
+          ))}
+        </div>
       ) : (
         <div>
           <p className="text-center text-grayPrimary font-medium mb-5">

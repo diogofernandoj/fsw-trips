@@ -27,6 +27,7 @@ const UserReservationItem = ({
   const { trip } = reservation;
 
   const [modalOpen, setModal] = useState<boolean>(false);
+  const [loadingButton, setLoadingButton] = useState<boolean>(false);
 
   const handleModalClick = (target: any) => {
     if (target.id === "modal") {
@@ -35,11 +36,14 @@ const UserReservationItem = ({
   };
 
   const handleDeleteClick = async () => {
+    setLoadingButton(true);
+
     const res = await fetch(`/api/trips/reservation/${reservation.id}`, {
       method: "DELETE",
     });
 
     setModal(false);
+    setLoadingButton(false);
 
     if (!res.ok) {
       return toast.error("Ocorreu um erro ao cancelar a reserva!", {
@@ -89,7 +93,12 @@ const UserReservationItem = ({
               >
                 Voltar
               </Button>
-              <Button className="w-1/2" onClick={handleDeleteClick}>
+              <Button
+                disabled={loadingButton}
+                variant={!!loadingButton ? "loading" : "primary"}
+                className="w-1/2"
+                onClick={handleDeleteClick}
+              >
                 Sim, cancelar
               </Button>
             </div>

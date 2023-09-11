@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { fadeIn } from "@/animation/variants";
+import { useState } from "react";
 
 interface TripSearchForm {
   destination: string;
@@ -18,6 +19,8 @@ interface TripSearchForm {
 const TripSearch = () => {
   const router = useRouter();
 
+  const [loadingButton, setLoadingButton] = useState<boolean>(false);
+
   const {
     control,
     formState: { errors },
@@ -26,6 +29,7 @@ const TripSearch = () => {
   } = useForm<TripSearchForm>();
 
   const onSubmit = (data: TripSearchForm) => {
+    setLoadingButton(true);
     router.push(
       `/trips/search?destination=${data.destination}${
         data.startDate ? `&startDate=${data.startDate?.toISOString()}` : ""
@@ -89,12 +93,15 @@ const TripSearch = () => {
                 onValueChange={field.onChange as any}
                 value={field.value}
                 onBlur={field.onBlur}
+                className="w-full"
               />
             )}
           />
         </div>
 
         <Button
+          disabled={loadingButton}
+          variant={!!loadingButton ? "loading" : "primary"}
           onClick={() => handleSubmit(onSubmit)()}
           className="w-full lg:w-1/2 lg:h-fit"
         >

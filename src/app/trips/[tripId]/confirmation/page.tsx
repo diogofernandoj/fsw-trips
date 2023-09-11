@@ -13,11 +13,13 @@ import { toast } from "react-toastify";
 import { loadStripe } from "@stripe/stripe-js";
 import { motion } from "framer-motion";
 import { fadeIn } from "@/animation/variants";
+import SkeletonConfirmationCard from "./components/SkeletonConfirmationCard";
 
 const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   const [trip, setTrip] = useState<Trip | null>(null);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingButton, setLoadingButton] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
 
@@ -59,6 +61,8 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   if (!trip) return null;
 
   const handleReservationButton = async () => {
+    setLoadingButton(true);
+
     const res = await fetch("/api/payment", {
       method: "POST",
       body: JSON.stringify({
@@ -75,6 +79,7 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
     });
 
     if (!res.ok) {
+      setLoadingButton(false);
       return toast.error("Ocorreu um erro ao realizar a reserva!", {
         position: "bottom-center",
       });
@@ -87,10 +92,6 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
     );
 
     await stripe?.redirectToCheckout({ sessionId });
-
-    toast.success("Reserva realizada com sucesso!", {
-      position: "bottom-center",
-    });
   };
 
   const startDate = new Date(searchParams.get("startDate") as string);
@@ -98,17 +99,16 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   const guests = searchParams.get("guests");
 
   return (
-    <motion.div
-      variants={fadeIn("up", 0.4)}
-      initial="hidden"
-      animate="show"
-      exit="hidden"
-      className="w-full max-w-[600px] p-5 mx-auto pb-14"
-    >
+    <div className="w-full max-w-[600px] p-5 mx-auto pb-14">
       {!!loading ? (
-        <div></div>
+        <SkeletonConfirmationCard />
       ) : (
-        <div>
+        <motion.div
+          variants={fadeIn("up", 0.4)}
+          initial="hidden"
+          animate="show"
+          exit="hidden"
+        >
           <h2 className="font-semibold text-xl text-primaryDark">Sua viagem</h2>
 
           {/* CARD */}
@@ -156,13 +156,18 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
             <h3 className="font-semibold mt-5">Hóspedes</h3>
             <p>{guests} hóspedes</p>
 
-            <Button onClick={handleReservationButton} className="mt-5">
+            <Button
+              disabled={loadingButton}
+              variant={!!loadingButton ? "loading" : "primary"}
+              onClick={handleReservationButton}
+              className="mt-5"
+            >
               Finalizar compra
             </Button>
           </div>
-        </div>
+        </motion.div>
       )}
-    </motion.div>
+    </div>
   );
 };
 

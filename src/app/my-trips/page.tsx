@@ -10,6 +10,7 @@ import UserReservationItem from "./components/UserReservationItem";
 import Button from "@/components/Button";
 import { motion } from "framer-motion";
 import { fadeIn } from "@/animation/variants";
+import SkeletonReserveCard from "./components/SkeletonReserveCard";
 
 const MyTrips = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -48,8 +49,12 @@ const MyTrips = () => {
         Minhas reservas
       </motion.h1>
       {!!loading ? (
-        ""
-      ) : !reservations ? (
+        <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-14">
+          {new Array(3).fill("").map((item, index) => (
+            <SkeletonReserveCard key={index} />
+          ))}
+        </div>
+      ) : !reservations?.length ? (
         <motion.div
           variants={fadeIn("up", 0.4)}
           initial="hidden"

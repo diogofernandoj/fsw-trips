@@ -31,11 +31,18 @@ const ReservationConfirmation = () => {
           navegação.
         </p>
       </motion.div>
-      <Link href="/">
-        <Button variant="outlined" className="mt-4">
-          Ir para o início
-        </Button>
-      </Link>
+      <motion.span
+        variants={fadeIn("up", 0.4)}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
+      >
+        <Link href="/">
+          <Button variant="outlined" className="mt-4">
+            Ir para o início
+          </Button>
+        </Link>
+      </motion.span>
     </div>
   );
 };

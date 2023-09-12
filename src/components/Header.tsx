@@ -1,5 +1,7 @@
 "use client";
 
+import { fadeIn } from "@/animation/variants";
+import { motion } from "framer-motion";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,6 +22,9 @@ const Header = () => {
         <Link href="/">
           <Image width={183} height={32} src="/logo.png" alt="FSW Logo" />
         </Link>
+        {status === "loading" && (
+          <div className="animate-pulse bg-gray-200 h-6 w-16"></div>
+        )}
         {status === "unauthenticated" && (
           <button
             onClick={handleLoginClick}
@@ -57,7 +62,13 @@ const Header = () => {
             />
 
             {!!menu && (
-              <div className="mt-[1px] absolute top-full right-0 w-[110%] bg-white shadow-lg flex flex-col justify-center items-center rounded-lg border border-walterWhite">
+              <motion.div
+                variants={fadeIn("down", 0)}
+                initial="hidden"
+                animate="show"
+                exit="hidden"
+                className="mt-[1px] absolute top-full right-0 w-[110%] bg-white shadow-lg flex flex-col justify-center items-center rounded-lg border border-walterWhite"
+              >
                 <Link
                   href="/my-trips"
                   className="text-primary font-medium text-xs pt-2 pb-1 text-center"
@@ -72,7 +83,7 @@ const Header = () => {
                 >
                   Logout
                 </button>
-              </div>
+              </motion.div>
             )}
           </div>
         )}

@@ -57,6 +57,7 @@ const TripReservation = ({
     const res = await response.json();
 
     if (res?.error?.code === "TRIP_ALREADY_RESERVED") {
+      setLoadingButton(false);
       setError("startDate", {
         type: "manual",
         message: "Esta data já está reservada.",
@@ -69,6 +70,7 @@ const TripReservation = ({
     }
 
     if (res?.error?.code === "INVALID_START_DATE") {
+      setLoadingButton(false);
       return setError("startDate", {
         type: "manual",
         message: "Data inválida.",
@@ -76,14 +78,11 @@ const TripReservation = ({
     }
 
     if (res?.error?.code === "INVALID_END_DATE") {
+      setLoadingButton(false);
       return setError("endDate", {
         type: "manual",
         message: "Data inválida.",
       });
-    }
-
-    if (res?.error) {
-      setLoadingButton(false);
     }
 
     router.push(
@@ -119,7 +118,7 @@ const TripReservation = ({
               selected={field.value}
               placeholderText="Data de Início"
               className="w-full"
-              minDate={tripStartDate}
+              minDate={new Date()}
               maxDate={tripEndDate}
             />
           )}
@@ -141,9 +140,12 @@ const TripReservation = ({
               onChange={field.onChange}
               selected={field.value}
               placeholderText="Data Final"
-              className="w-full"
+              className={`w-full ${
+                !startDate && "bg-gray-200 cursor-not-allowed"
+              }`}
               maxDate={tripEndDate}
-              minDate={startDate ?? tripStartDate}
+              minDate={startDate}
+              disabled={!startDate}
             />
           )}
         />
@@ -169,7 +171,14 @@ const TripReservation = ({
       />
 
       <div className="flex justify-between mt-3">
-        <p className="font-medium text-sm text-primaryDark">Total: </p>
+        <p className="font-medium text-sm text-primaryDark">
+          {`Total${
+            startDate && endDate
+              ? ` (${differenceInDays(endDate, startDate)} dias)`
+              : ""
+          }`}
+          :
+        </p>
         <p className="font-medium text-sm text-primaryDark">
           {startDate && endDate
             ? `R$${differenceInDays(endDate, startDate) * pricePerDay}` ?? 1

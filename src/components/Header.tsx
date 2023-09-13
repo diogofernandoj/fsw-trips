@@ -20,7 +20,7 @@ const Header = () => {
     <div className="w-full mx-auto h-20 flex items-center lg:border-b lg:border-[#eee]">
       <nav className="w-11/12 max-w-6xl mx-auto flex items-center justify-between">
         <Link href="/">
-          <Image width={183} height={32} src="/logo.png" alt="FSW Logo" />
+          <Image width={183} height={32} src="/fsw-logo.png" alt="FSW Logo" />
         </Link>
         {status === "loading" && (
           <div className="animate-pulse bg-gray-200 h-6 w-16"></div>

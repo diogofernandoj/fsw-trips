@@ -1,34 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">Sistema de Reservas | FindTrips</h1>
 
-## Getting Started
+<h1 align="center">
+    <a href="https://findtrips.vercel.app" target="blank">
+        <small align="center">Clique para visitar o projeto🔗</small>
+    </a>
+</h1>
 
-First, run the development server:
+<h2>Descrição</h2>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+O **FindTrips** é uma plataforma de reservas de hospedagens que conecta usuários a um catálogo diversificado de hotéis, fazendas, pousadas e muito mais. O sistema permite selecionar destinos favoritos, escolher datas, especificar o número de pessoas e concluir a reserva com pagamento seguro via cartão de crédito.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tecnologias Utilizadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js**: Framework React para renderização do lado do servidor e geração de sites estáticos.
+- **React**: Biblioteca JavaScript para construção de interfaces interativas e dinâmicas.
+- **TypeScript**: Superset de JavaScript que adiciona tipagem estática, melhorando a manutenção do código.
+- **Tailwind CSS**: Framework CSS utilitário para estilização rápida e responsiva.
+- **Framer Motion**: Biblioteca para animações fluidas e interativas.
+- **PostgreSQL**: Banco de dados relacional robusto e de código aberto.
+- **Prisma**: ORM para simplificar a interação com o banco de dados.
+- **React Hook Form**: Controle de formulários simples e performático.
+- **NextAuth**: Gerenciamento de autenticação de usuários (login com Google).
+- **Stripe**: Plataforma de pagamentos para transações online seguras.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Funcionalidades
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Catálogo de Hospedagens**: Explore uma lista variada de hotéis, pousadas e fazendas com detalhes de cada destino.  
+- **Filtro Personalizado**: Selecione destinos por datas e número de pessoas para resultados mais precisos.  
+- **Reserva Online**: Realize reservas diretamente no site, com confirmação instantânea.  
+- **Autenticação Segura**: Faça login com o Google para acesso rápido e seguro.  
+- **Pagamentos**: Conclua reservas com pagamento integrado via Stripe.  
+- **Design Responsivo**: Navegue facilmente em qualquer dispositivo, com interface moderna e animada.
